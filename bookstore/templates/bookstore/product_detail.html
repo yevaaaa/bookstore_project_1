@@ -1,0 +1,41 @@
+{% extends 'bookstore/main.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ products.name }}</title>
+</head>
+<body>
+    {% block content %}
+
+
+                    <img style="padding-left: 17px" src="{{ products.ImageURL}}"  width="640" height="380" name="myImage"
+                    onclick="myImage.height=570;myImage.width=960"
+                    ondblclick="myImage.width=640;myImage.height=380">
+                        <br>
+                    <br>
+
+
+        <div class="col-lg-12">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190;Back to Store</a>
+                <h3 style="display: inline-block; float: right">{{ products.name }},${{ products.price|floatformat:2 }}</h3>
+                <hr>
+
+                  <table class="table">
+                      <tr>
+
+                    <h2>"{{ products.name }}" Description</h2>
+                    <hr>
+                          <p>{{ products.description }}</p>
+                          <br>
+                      </tr>
+                  </table>
+            </div>
+        <br>
+
+        </div>
+    {% endblock content %}
+</body>
+</html>

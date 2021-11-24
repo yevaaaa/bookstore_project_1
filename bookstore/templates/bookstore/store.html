@@ -1,0 +1,55 @@
+{% extends 'bookstore/main.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <meta charset="UTF-8">
+    <title>Store</title>
+</head>
+<body>
+{% block content %}
+    <div class="row">
+        {% for product in page_obj %}
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{{ product.ImageURL }}">
+            <div class="box-element product">
+                <h6><strong>{{ product.name }}</strong></h6>
+                <hr>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'store' %}"><button data-product={{ product.id }} data-action="add" class=" btn btn-outline-secondary add-btn update-cart" >add to cart</button></a>
+
+                {% elif page_obj.has_previous %}
+                    <a href="?page=2"><button data-product={{ product.id }} data-action="add" class=" btn btn-outline-secondary add-btn update-cart" >add to cart</button></a>
+                {% endif %}
+                <a class="btn btn-outline-success" href="{% url 'product-detail' product.id %}">view</a>
+                <h3 style="display: inline-block; float: right">${{ product.price|floatformat:2 }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        <br>
+
+
+        <div class="pagination" style="padding-top: 5px;padding-left: 425px;>
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first, </a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous </a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next, </a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}"> last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    <br>
+
+{% endblock content %}
+</body>
+</html>
